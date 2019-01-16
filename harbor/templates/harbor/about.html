@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>关于Harbor</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'harbor/css/mystyle.css' %}">
+</head>
+<body>
+<div>
+    <div>
+        <ul class="topmeun">
+            <li class="topmeun"><a href="/harbor/">Harbor主页</a></li>
+            <li class="topmeun" style="float: right"><a class="active" href="/harbor/about/">关于Harbor</a></li>
+        </ul>
+    </div>
+    {% for image_name in pm_image_list %}
+        <p><a href="/harbor/tags/{{ image_name }}">{{ image_name }}</a></p>
+    {% endfor %}
+</div>
+</body>
+</html>

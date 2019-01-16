@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ image_name }}</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'harbor/css/mystyle.css' %}">
+</head>
+<body>
+<div>
+    <div>
+        <ul class="topmeun">
+            <li class="topmeun"><a href="/harbor/">Harbor主页</a></li>
+            <li><a class="active" href="/harbor/tags/">标签</a> </li>
+            <li class="topmeun" style="float: right"><a href="/harbor/about/">关于Harbor</a></li>
+        </ul>
+    </div>
+    <div style="padding-left: 28%; padding-top: 20px">
+        <table border="1" cellspacing="0">
+        <tr style="background-color: gray">
+            <th>选择框</th>
+            <th class="tablewith">镜像名</th>
+            <th class="tablewith">镜像tag</th>
+        </tr>
+        <form action="/harbor/delete/" method="post">
+        {% for tag in tags_list %}
+        <tr>
+            <td><input name="tags" type="checkbox" value="{{ image_name }},{{ tag }}"></td>
+            <td class="tablewith">{{ image_name }}</td>
+            <td class="tablewith">{{ tag }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td style="border: 0px"></td>
+            <td style="border: 0px"></td>
+            <td style="border: 0px"><input style="float:right; margin-right:100px; width: 100px; background-color: gray" type="submit" name="submit" value="删除" /></td>
+        </tr>
+        </form>
+        </table>
+    </div>
+</div>
+</body>
+</html>

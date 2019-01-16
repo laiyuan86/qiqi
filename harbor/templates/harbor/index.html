@@ -1,0 +1,43 @@
+{% load static %}  <!-- app内创建静态文件 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Harbor 首页</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'harbor/css/mystyle.css' %}"> <!-- app内创建静态文件 -->
+</head>
+<body>
+<div>
+    <div>
+        <ul>
+            <li><a href="/">首页</a> </li>
+            <li><a class="active" href="/harbor/">Harbor主页</a> </li>
+            <div class="dropdown">
+                <a href="#" class="dropbtn">项目名称</a>
+                <div class="dropdown-content">
+                    {% for pm_name, pm_images in pms_info_dic.items %}
+                        <a name="pmdetail" href="/harbor/detail/{{ pm_name }}/">{{ pm_name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <li style="float: right"><a href="/harbor/about/">关于Harbor</a> </li>
+        </ul>
+    </div>
+    <div style="margin-left: 28%; margin-top: 50px">
+    <h2>{{ pm_name }}</h2>
+    <table border="1" cellspacing="0">
+    <tr style="background-color: gray">
+        <th class="tablewith">{{ Image_Name }}</th>
+        <th class="tablewith">{{ tag_number }}</th>
+    </tr>
+    {% for image_name, tag_num in tags_num_dic.items%}
+        <tr style="border: 1px;">
+            <td class="tablewith"><a href="/harbor/tags/{{ image_name }}">{{ image_name }}</a></td>
+            <td class="tablewith">{{ tag_num }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    </div>
+</div>
+</body>
+</html>
