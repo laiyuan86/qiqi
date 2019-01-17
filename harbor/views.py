@@ -73,4 +73,6 @@ def delete_image(request):
         for image_tag in res:
             image_tag_list = image_tag.split(',')
             exharbor.delete_image(image_tag_list[0], image_tag_list[1])
-    return render(request, 'harbor/about.html')
+    image_name = image_tag_list[0]
+    tags_list = exharbor.get_image_tags(image_name)[0]
+    return render(request, 'harbor/tags.html', {'tags_list': tags_list, 'image_name': image_name})

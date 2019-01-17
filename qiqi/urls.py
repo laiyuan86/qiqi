@@ -21,5 +21,8 @@ from .view import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('harbor/', include('harbor.urls')),
+    path('k8s/', include('k8s.urls')),
+    path('logs/', include('logs.urls')),
+    path('monitor/', include('monitor.urls')),
     path('', index),
 ]

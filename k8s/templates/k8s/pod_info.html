@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title_ns }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'k8s/css/mystyle.css' %}">
+</head>
+<body>
+<div>
+    <div name="导航栏">
+        <ul>
+            <li><a href="/">首页</a> </li>
+            <li><a href="/k8s/">Kubernetes主页</a> </li>
+            <div class="dropdown">
+                <a href="#" class="dropbtn">命名空间</a>
+                <div class="dropdown-content">
+                    {% for namespace in namespaces_list %}
+                        <a name="pmdetail" href="/k8s/pods/{{ namespace }}/">{{ namespace }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <li><a class="active" href="/k8s/pods/{{ title_ns }}/">{{ title_ns }}信息</a> </li>
+            <li style="float: right"><a href="/k8s/about/">Kubernetes简介</a> </li>
+        </ul>
+    </div>
+    <div style="padding-top: 50px; padding-left: 11%">
+        <h1>命名空间: {{ title_ns }}</h1>
+        <table border="1" cellspacing="0">
+            <tr style="background-color: gray">
+                <th style="width: 350px">Pod Name</th>
+                <th style="width: 500px">Image</th>
+                <th style="width: 100px">Host IP</th>
+                <th style="width: 100px">Pod IP</th>
+                <th style="width: 100px">Phase</th>
+            </tr>
+            {% for pod_info_list in pods_info_list %}
+                <tr>
+                    {% for k, v in pod_info_list.items %}
+                        {% if k == "phase" %}
+                            {% if v == "Running" %}
+                                <td style="text-align: center"><div style="background-color: limegreen">{{ v }}</div></td>
+                            {% else %}
+                                <td style="text-align: center">{{ v }}</td>
+                            {% endif %}
+                        {% else %}
+                            <td>{{ v }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+</body>
+</html>

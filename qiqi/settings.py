@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'harbor',
+    'k8s',
+    'logs',
+    'monitor',
 ]
 
 MIDDLEWARE = [

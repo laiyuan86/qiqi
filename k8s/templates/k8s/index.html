@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kubernetes主页</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'k8s/css/mystyle.css' %}">
+</head>
+<body>
+<div>
+    <div name="导航栏">
+        <ul>
+            <li><a href="/">首页</a> </li>
+            <li><a class="active" href="/k8s/">Kubernetes主页</a> </li>
+            <div class="dropdown">
+                <a href="#" class="dropbtn">命名空间</a>
+                <div class="dropdown-content">
+                    {% for namespace in namespaces_list %}
+                        <a name="pmdetail" href="/k8s/pods/{{ namespace }}/">{{ namespace }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <li style="float: right"><a href="/k8s/about/">Kubernetes简介</a> </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
