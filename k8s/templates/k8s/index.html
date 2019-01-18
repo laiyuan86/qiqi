@@ -23,6 +23,24 @@
             <li style="float: right"><a href="/k8s/about/">Kubernetes简介</a> </li>
         </ul>
     </div>
+    <div style="background-color: gray; width: 500px; margin-top: 50px; margin-left: 10%; text-align: center">
+        集群nodes:
+    </div>
+    <div style="margin-top: 50px; margin-left: 10%; margin-right: 10%">
+        <div>
+            {% for node_name, node_info in nodes_info_dic.items %}
+                <div class="nodedisplay"><a href="#" style="text-decoration: none; color: #111111">{{ node_name }}</a></div>
+            {% endfor %}
+        </div>
+    </div>
+    <div style="background-color: gray; width: 500px; margin-top: 100px; margin-left: 10%; text-align: center">
+        集群资源:
+    </div>
+    <div style="margin-top: 50px; margin-left: 10%; margin-right: 10%">
+        <div class="resorcedisplay" style="margin-left: 0">CPU: {{ cpu_nums }}</div>
+        <div class="resorcedisplay">内存: {{ memorys }} G</div>
+    </div>
+
 </div>
 </body>
 </html>

@@ -24,8 +24,8 @@
             <li style="float: right"><a href="/k8s/about/">Kubernetes简介</a> </li>
         </ul>
     </div>
-    <div style="padding-top: 50px; padding-left: 11%">
-        <h1>命名空间: {{ title_ns }}</h1>
+    <div style="padding-top: 50px; padding-left: 12%">
+        <h1>命名空间{{ title_ns }}的pod_list</h1>
         <table border="1" cellspacing="0">
             <tr style="background-color: gray">
                 <th style="width: 350px">Pod Name</th>
@@ -48,6 +48,33 @@
                         {% endif %}
                     {% endfor %}
                 </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div style="padding-top: 50px; padding-left: 12%">
+        <h1>命名空间{{ title_ns }}的svc_list</h1>
+        <table border="1" cellspacing="0">
+            <tr style="background-color: gray">
+                <th style="width: 250px">Service Name</th>
+                <th style="width: 300px">Selector</th>
+                <th style="width: 150px">Cluster IP</th>
+                <th style="width: 150px">Type</th>
+                <th style="width: 100px">Node Port</th>
+                <th style="width: 100px">Service Port</th>
+                <th style="width: 90px">Target Port</th>
+            </tr>
+            {% for svc_info in svcs_info_list %}
+            <tr>
+                {% for k, v in svc_info.items %}
+                    {% if k == "selector" %}
+                        {% for lab, val in v.items %}
+                            <td>{{ lab }} : {{ val }}</td>
+                        {% endfor %}
+                    {% else %}
+                        <td>{{ v }}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
             {% endfor %}
         </table>
     </div>

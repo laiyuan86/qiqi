@@ -70,3 +70,23 @@ li a:hover, .dropdown:hover, .dropbtn
     width: 300px;
     text-align: center;
 }
+
+.nodedisplay {
+    display:inline-block;
+    width: 120px;
+    height: 40px;
+    line-height: 40px; /*上下居中显示*/
+    text-align: center;
+    background-color: limegreen;
+    margin: 3px;
+}
+
+.resorcedisplay {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    background-color: limegreen;
+    margin: 20px;
+    line-height: 100px;
+    text-align: center;
+}
