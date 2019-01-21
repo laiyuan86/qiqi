@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Node {{ node_name }} 机器信息</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'k8s/css/mystyle.css' %}">
+</head>
+<body>
+<div>
+    <div>
+        <ul>
+            <li><a href="/">首页</a></li>
+            <li><a href="/k8s/">kubernetes主页</a> </li>
+            <li><a class="active" href="#">Node {{ node_name }} 信息</a> </li>
+        </ul>
+    </div>
+    <div style="margin-left: 10%; margin-right: 10%; margin-top: 100px">
+    <table style="margin-left: 30%">
+        <tr>
+            <th>项目</th>
+            <th>值</th>
+        </tr>
+            {% for i in node_info_list %}
+                {% for k, v in i.items %}
+                    <tr>
+                        <td>{{ k }}</td>
+                        <td>{{ v }}</td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+    </table>
+    </div>
+</div>
+</body>
+</html>

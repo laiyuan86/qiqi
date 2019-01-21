@@ -32,6 +32,20 @@ def get_pods_by_ns(request):
                                               'title_ns': title_ns, 'svcs_info_list': svcs_info_list})
 
 
+#显示单个nodes的信息
+def get_node_info_by_nodename(request):
+    exkube = execkuber()
+    path = request.path
+    path_list = path.split('/')
+    while '' in path_list:
+        path_list.remove('')
+    node_name = path_list[2]
+    print(node_name)
+    node_info_list = exkube.get_node_info_by_nodename(node_name)
+
+    return render(request, 'k8s/node_detail_info.html', {'node_name': node_name, 'node_info_list': node_info_list})
+
+
 if __name__ == '__main__':
     index()
 

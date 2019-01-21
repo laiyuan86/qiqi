@@ -1,6 +1,5 @@
 #kubernetes 功能函数
 from kubernetes import client, config
-import json
 
 
 class execkuber(object):
@@ -124,14 +123,47 @@ class execkuber(object):
             target_port = port.get('target_port')
             svc_info_dic['target_port'] = target_port
             svcs_info_list.append(svc_info_dic)
-            print(type(selector))
         return svcs_info_list
 
+    #根据node_name获取node信息
+    def get_node_info_by_nodename(self, nodename):
+        v1 = client.CoreV1Api()
+        Internal_IP = {}
+        External_ID = {}
+        NodeName = {}
+        Create_Time = {}
+        Node_UID = {}
+        Node_Kubelet_Status = {}
+        node_info_list = []
+        NodeName['NodeName'] = nodename
+        res = v1.read_node(nodename)
+        node_metadata = res.metadata
+        Create_Time['Create_Time'] = node_metadata.creation_timestamp.date()
+        Node_UID['Node_UID'] = node_metadata.uid
+        node_spec = res.spec
+        External_ID['External_ID'] = node_spec.external_id
+        node_status = res.status
+        Internal_IP['Internal_IP'] = node_status.addresses[0].address
+        node_allocatable_info = node_status.allocatable
+        node_capacity_info = node_status.capacity
+        Node_Kubelet_Status['Status'] = node_status.conditions[-1].type
+        node_info = eval(str(node_status.node_info))
+        node_info_list.append(NodeName)
+        node_info_list.append(Node_UID)
+        node_info_list.append(Create_Time)
+        node_info_list.append(External_ID)
+        node_info_list.append(Internal_IP)
+        node_info_list.append(Node_Kubelet_Status)
+        node_info_list.append(node_allocatable_info)
+        node_info_list.append(node_capacity_info)
+        node_info_list.append(node_info)
 
+        print(node_info_list)
+        return node_info_list
 
 
 if __name__ == '__main__':
     exkube = execkuber()
     ns = "acc-pay"
     node_name = "172.24.132.187"
-    exkube.get_svc_by_ns(ns)
+    exkube.get_node_info_by_nodename(node_name)
