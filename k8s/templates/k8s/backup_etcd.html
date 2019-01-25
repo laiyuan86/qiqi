@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ETCD集群数据备份</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'k8s/css/mystyle.css' %}">
+</head>
+<body>
+<div class="导航栏">
+    <ul>
+        <li><a href="/">首页</a></li>
+        <li><a href="/k8s/">Kubernetes主页</a></li>
+        <li style="float: right"><a href="/k8s/about/">Kubernetes简介</a> </li>
+        <li style="float: right"><a class="active" href="/k8s/backup/">备份ETCD数据</a></li>
+    </ul>
+</div>
+<div style="margin-left: 10%; margin-right: 10%">
+    <div style="padding-top: 100px; padding-left: 15%">
+        <h2 style="padding-left: 20%">ETCD数据备份</h2>
+        {% for res in ex_result_list %}
+            {% for ip, ex_res in res.items %}
+                <p>{{ ip }}, {{ ex_res }}</p>
+            {% endfor %}
+        {% endfor %}
+        <h2 style="padding-left: 20%">ETCD数据恢复的方法</h2>
+        <p>1, systemctl stop kube-apiserver 停止kube-apiserver</p>
+        <p>2, systemctl stop etcd  停止etcd服务</p>
+        <p>3, mv /opt/data/etcd/default.etcd /opt/data/etcd/default.etcd_bak  移除所有etcd服务实例的数据目录</p>
+        <p>4, 拷贝数据到各个etcd节点</p>
+        <p>5, ETCDCTL_API=3 etcdctl snapshot --ca-file=/opt/kubernetes/ssl/ca.pem --cert-file=/opt/kubernetes/ssl/server.pem
+            --key-file=/opt/kubernetes/ssl/server-key.pem  restore "备份数据" --name="ETCD_NAME" --data-dir="元数据存储路径"
+                --initial-cluster="ETCD_CLUSTER" --initial-cluster-token="ETCD_INITIAL_CLUSTER_TOKEN" </p>
+        <p>每个etcd上执行如上的恢复命令</p>
+        <p>6, 启动etcd集群</p>
+        <p>7， 查看etcd集群member及健康状态</p>
+        <p>etcdctl --ca-file=/opt/kubernetes/ssl/ca.pem --cert-file=/opt/kubernetes/ssl/server.pem --key-file=/opt/kubernetes/ssl/server-key.pem member list</p>
+        <p>etcdctl --ca-file=/opt/kubernetes/ssl/ca.pem --cert-file=/opt/kubernetes/ssl/server.pem --key-file=/opt/kubernetes/ssl/server-key.pem cluster-health</p>
+    </div>
+</div>
+</body>
+</html>

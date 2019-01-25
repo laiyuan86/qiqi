@@ -1,6 +1,7 @@
 # Create your views here.
 from django.shortcuts import render
 from .func import execkuber
+from .exserver import connect_server
 
 
 def index(request):
@@ -44,6 +45,29 @@ def get_node_info_by_nodename(request):
     node_info_list = exkube.get_node_info_by_nodename(node_name)
 
     return render(request, 'k8s/node_detail_info.html', {'node_name': node_name, 'node_info_list': node_info_list})
+
+
+#备份etcd集群数据
+def backup_etcd_data(request):
+    IP_LIST = ['172.24.132.185', '172.24.132.186', '172.24.132.187']
+    PORT = 22
+    USER = 'root'
+    PASSWORD = 'sgdbyjc@2018'
+    COMMAND = 'bash /opt/script/etcd/backup.sh'
+    back_ex = connect_server()
+    ex_result_list = []
+    for IP in IP_LIST:
+        ex_result_dic = {}
+        res = back_ex.ex_command(IP, PORT, USER, PASSWORD, COMMAND)
+        ex_result_dic[IP] = res
+        ex_result_list.append(ex_result_dic)
+
+    return render(request, 'k8s/backup_etcd.html', {'ex_result_list': ex_result_list})
+
+
+#xuexi js
+def return_js(request):
+    return render(request, 'k8s/styjs.html')
 
 
 if __name__ == '__main__':
